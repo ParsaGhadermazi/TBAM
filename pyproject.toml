@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tbam-viewer"
+version = "0.1.0"
+description = "CLI BAM viewer using Textual"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "textual>=0.56.0",
+  "pysam>=0.22.0",
+]
+
+[project.scripts]
+tbam = "tbam.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tbam*"]
