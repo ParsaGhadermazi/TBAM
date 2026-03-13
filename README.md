@@ -27,6 +27,10 @@ python -m tbam.cli demo-data --out-dir sample_data --reads 400
 python -m tbam.cli view sample_data/demo.bam --reference sample_data/demo.fa
 ```
 
+## Interface GIF
+
+![TBAM terminal viewer demo](docs/tbam-interface-demo.gif)
+
 ## Use With Your BAM
 
 1. Index BAM:
@@ -72,10 +76,11 @@ python -m tbam.cli view /path/to/your.bam \
 
 ## Color Scheme
 
-- `A`: red background
-- `C`: blue background
-- `G`: green background
-- `T`: orange background
+- Colorblind-friendly base palette (white text on colored backgrounds)
+- `A`: deep blue background
+- `C`: dark amber background
+- `G`: teal background
+- `T`: purple-magenta background
 - mismatch: gray background
 - gap/skip/insertion marker (`-`, `~`, `+`): dark red background
 - text: white

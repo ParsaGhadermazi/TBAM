@@ -16,6 +16,7 @@ def generate_demo_bam(
 ) -> tuple[Path, Path, Path, Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     bam_path = out_dir / f"{prefix}.bam"
+    unsorted_bam_path = out_dir / f"{prefix}.unsorted.bam"
     bai_path = out_dir / f"{prefix}.bam.bai"
     fasta_path = out_dir / f"{prefix}.fa"
     fai_path = out_dir / f"{prefix}.fa.fai"
@@ -31,7 +32,7 @@ def generate_demo_bam(
         "SQ": [{"SN": name, "LN": length} for name, length in references],
     }
 
-    with pysam.AlignmentFile(str(bam_path), "wb", header=header) as out_bam:
+    with pysam.AlignmentFile(str(unsorted_bam_path), "wb", header=header) as out_bam:
         read_id = 0
         for ref_index, (_, ref_length) in enumerate(references):
             count = _reads_for_reference(reads, ref_index, len(references))
@@ -64,6 +65,9 @@ def generate_demo_bam(
                 out_bam.write(read)
                 read_id += 1
 
+    # Ensure coordinate sort order so BAM indexing succeeds.
+    pysam.sort("-o", str(bam_path), str(unsorted_bam_path))
+    unsorted_bam_path.unlink(missing_ok=True)
     pysam.index(str(bam_path))
     return bam_path, bai_path, fasta_path, fai_path
 

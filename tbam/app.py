@@ -17,14 +17,16 @@ from tbam.bam_utils import (
 
 
 class BamViewerApp(App[None]):
+    # Colorblind-friendly base palette (no red/green pairing).
     BASE_BG_COLORS = {
-        "A": "#b22222",   # dark red
-        "C": "#1e66f5",   # blue
-        "G": "#2e7d32",   # green
-        "T": "#b36b00",   # dark orange
+        "A": "#005f9e",   # deep blue
+        "C": "#9a5d00",   # dark amber
+        "G": "#007a5e",   # teal
+        "T": "#8a3fa0",   # purple-magenta
         "N": "#555555",   # gray
     }
     MISMATCH_BG_COLOR = "#666666"
+    GAP_BG_COLOR = "#8b0000"
 
     CSS = """
     Screen {
@@ -358,7 +360,7 @@ class BamViewerApp(App[None]):
                 chars.append(ch)
                 continue
             if ch in "-~+":
-                chars.append(self._bg_style(ch, "#8b0000"))
+                chars.append(self._bg_style(ch, self.GAP_BG_COLOR))
                 continue
             if ch.islower():
                 chars.append(self._bg_style(ch.upper(), self.MISMATCH_BG_COLOR))
